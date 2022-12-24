@@ -14,9 +14,11 @@ This runs your `curl` command five times and returns the average time elapsed in
 Average elapsed time: 0.1610317872s
 ```
 
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/jonbaldie/avg/tree/main.svg?style=shield)](https://dl.circleci.com/status-badge/redirect/gh/jonbaldie/avg/tree/main)
+
 ## Roadmap
 
-- [ ] CI config.yml file
-- [ ] CI workflow created
+- [x] CI config.yml file
+- [x] CI workflow created
 - [ ] First GH release
 - [ ] Installation docs
