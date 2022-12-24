@@ -20,10 +20,6 @@ Average elapsed time: 0.1610317872s
 
 ## Installation
 
-Download the latest executable, and then `mv` it to a directory in your `$PATH`.
-
-- [Linux](https://d67e5qwkanwy.cloudfront.net/avg)
-
 To build from sources:
 
 ```bash
