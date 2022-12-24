@@ -4,7 +4,7 @@ This is a tool for measuring the average duration of your console commands.
 
 Pass in two arguments: your console command and then the number of iterations. 
 
-```haskell
+```bash
 ./avg "curl -o /dev/null http://example.com" 5
 ```
 
