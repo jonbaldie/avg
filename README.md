@@ -1,5 +1,3 @@
-[![CircleCI](https://dl.circleci.com/status-badge/img/gh/jonbaldie/avg/tree/main.svg?style=shield)](https://dl.circleci.com/status-badge/redirect/gh/jonbaldie/avg/tree/main)
-
 # avg
 
 This is a tool for measuring the average duration of your console commands.
@@ -23,3 +21,5 @@ Average elapsed time: 0.1610317872s
 - [ ] Flesh out `make test`
 - [ ] First GH release
 - [ ] Installation docs
+
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/jonbaldie/avg/tree/main.svg?style=shield)](https://dl.circleci.com/status-badge/redirect/gh/jonbaldie/avg/tree/main)
