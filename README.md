@@ -1,3 +1,5 @@
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/jonbaldie/avg/tree/main.svg?style=shield)](https://dl.circleci.com/status-badge/redirect/gh/jonbaldie/avg/tree/main)
+
 # avg
 
 This is a tool for measuring the average duration of your console commands.
@@ -14,11 +16,10 @@ This runs your `curl` command five times and returns the average time elapsed in
 Average elapsed time: 0.1610317872s
 ```
 
-[![CircleCI](https://dl.circleci.com/status-badge/img/gh/jonbaldie/avg/tree/main.svg?style=shield)](https://dl.circleci.com/status-badge/redirect/gh/jonbaldie/avg/tree/main)
-
 ## Roadmap
 
 - [x] CI config.yml file
 - [x] CI workflow created
+- [ ] Flesh out `make test`
 - [ ] First GH release
 - [ ] Installation docs
