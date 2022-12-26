@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: haskell:8.8.4
+      - image: haskell:9.4.3
     steps:
       - run: apt-get update -yqq && apt-get install git -yqq && git clone -b ${CIRCLE_BRANCH} https://github.com/jonbaldie/avg.git && cd avg && make build && make clean
 
