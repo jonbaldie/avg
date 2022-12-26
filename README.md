@@ -20,10 +20,13 @@ Average elapsed time: 0.1610317872s
 
 ## Installation
 
-To build from sources:
+To build from sources (requires `ghc` installed):
 
 ```bash
-git clone https://github.com/jonbaldie/avg.git && cd avg && make all && mv ./build/avg /usr/local/bin/
+git clone https://github.com/jonbaldie/avg.git
+cd avg
+make all
+mv ./build/avg /usr/local/bin/
 ```
 
 ## Roadmap
