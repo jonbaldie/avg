@@ -29,6 +29,12 @@ make all
 mv ./build/avg /usr/local/bin/
 ```
 
+You can also pull the `jonbaldie/avg` image to run it using Docker:
+
+```bash
+docker run --rm jonbaldie/avg avg "curl -o /dev/null http://example.com" 5
+```
+
 ## Roadmap
 
 - [x] CI config.yml file
