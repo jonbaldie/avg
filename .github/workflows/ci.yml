@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up GHC
+        uses: haskell-actions/setup@v2
+        with:
+          ghc-version: '9.4.3'
+
+      - name: Build quality gate
+        run: make build
+
+      - name: Test quality gate
+        run: make test
+
+      - name: Clean build artifacts
+        run: make clean

@@ -1,45 +1,86 @@
 # avg
 
-This is a tool for measuring the average duration of your console commands.
+`avg` measures the average duration of a shell command across multiple runs.
 
-[![CircleCI](https://dl.circleci.com/status-badge/img/gh/jonbaldie/avg/tree/main.svg?style=shield)](https://dl.circleci.com/status-badge/redirect/gh/jonbaldie/avg/tree/main)
+[![CI](https://github.com/jonbaldie/avg/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/jonbaldie/avg/actions/workflows/ci.yml)
 
 ## Usage
 
-Pass in two arguments: your console command and then the number of iterations. 
+Run `avg` with exactly two arguments: a single quoted command string and a positive integer iteration count.
 
 ```bash
-avg "curl -o /dev/null http://example.com" 5
+avg "curl -o /dev/null https://example.com" 5
 ```
 
-This runs your `curl` command five times and returns the average time elapsed in seconds:
+This runs the command five times and prints the average elapsed time:
 
-```
+```text
 Average elapsed time: 0.1610317872s
 ```
 
-## Installation
+Quoting matters: `avg` passes the command string to the shell, so commands containing spaces, flags, pipes, or redirects must stay inside the quoted first argument.
 
-To build from sources (requires `ghc` installed):
+### Failure behavior
+
+Invalid invocation fails fast with a helpful message:
+
+```bash
+avg
+# Usage: avg "<command>" <iterations>
+
+avg "true" nope
+# Invalid iteration count: nope
+
+avg "true" 0
+# Iteration count must be a positive integer
+```
+
+If the measured command exits non-zero, `avg` also exits non-zero instead of printing a misleading average:
+
+```bash
+avg "false" 1
+# Command failed with exit code 1
+```
+
+## Build And Install
+
+Build from source with `ghc` installed:
 
 ```bash
 git clone https://github.com/jonbaldie/avg.git
 cd avg
-make all
-mv ./build/avg /usr/local/bin/
+make build
+mv -f ./build/avg /usr/local/bin/avg
 ```
 
-You can also pull the `jonbaldie/avg` image to run it using Docker:
+Use `make clean` to remove local build artifacts when you are done:
 
 ```bash
-docker run --rm jonbaldie/avg avg "curl -o /dev/null http://example.com" 5
+make clean
 ```
 
-## Roadmap
+`make all` is a build-and-clean convenience target for CI-style checks. It does not leave `./build/avg` behind, so it is not the right install step.
 
-- [x] CI config.yml file
-- [x] CI workflow created
-- [ ] Flesh out `make test`
-- [ ] First GH release
-- [ ] Installation docs
+You can also run the published Docker image:
 
+```bash
+docker run --rm jonbaldie/avg avg "curl -o /dev/null https://example.com" 5
+```
+
+## Test Workflow
+
+Run the full non-interactive CLI regression suite with:
+
+```bash
+make test
+```
+
+Today that target builds the binary and executes `./test_cli.sh`, which verifies:
+
+- missing arguments report usage
+- malformed iteration counts fail clearly
+- zero and negative iteration counts are rejected
+- child command failures propagate as non-zero exits
+- successful commands print `Average elapsed time:`
+
+GitHub Actions runs the same `make build`, `make test`, and `make clean` quality gates defined in `.github/workflows/ci.yml`. `.circleci/config.yml` is kept as a temporary transition shim so CircleCI stops failing on checkout while the repository uses GitHub Actions as the real CI pipeline.
