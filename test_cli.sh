@@ -2,7 +2,11 @@
 
 set -eu
 
-make build >/dev/null
+# Reuse an existing build when the caller already compiled the binary to avoid
+# concurrent ghc writes to Main.o during local verification.
+if [ ! -x ./build/avg ]; then
+  make build >/dev/null
+fi
 
 assert_fails_with() {
   expected="$1"

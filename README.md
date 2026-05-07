@@ -2,7 +2,7 @@
 
 This is a tool for measuring the average duration of your console commands.
 
-[![CircleCI](https://dl.circleci.com/status-badge/img/gh/jonbaldie/avg/tree/main.svg?style=shield)](https://dl.circleci.com/status-badge/redirect/gh/jonbaldie/avg/tree/main)
+[![CI](https://github.com/jonbaldie/avg/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/jonbaldie/avg/actions/workflows/ci.yml)
 
 ## Usage
 
@@ -42,4 +42,3 @@ docker run --rm jonbaldie/avg avg "curl -o /dev/null http://example.com" 5
 - [ ] Flesh out `make test`
 - [ ] First GH release
 - [ ] Installation docs
-
