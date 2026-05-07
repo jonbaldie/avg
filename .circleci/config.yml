@@ -5,7 +5,16 @@ jobs:
     docker:
       - image: haskell:9.4.3
     steps:
-      - run: apt-get update -yqq && apt-get install git -yqq && git clone -b ${CIRCLE_BRANCH} https://github.com/jonbaldie/avg.git && cd avg && make build && make clean
+      - checkout
+      - run:
+          name: Build quality gate
+          command: make build
+      - run:
+          name: Test quality gate
+          command: make test
+      - run:
+          name: Clean build artifacts
+          command: make clean
 
 workflows:
   test:
