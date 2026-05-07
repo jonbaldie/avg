@@ -44,6 +44,10 @@ avg "false" 1
 
 ## Build And Install
 
+GitHub Actions currently validates this repository with `ghc 9.4.3` in `.github/workflows/ci.yml`. That is the only CI-validated compiler version today.
+
+In local investigation on macOS, `ghc 9.12.1` showed intermittent failures during repeated clean builds in this repository. Until a safe fix is verified, treat that combination as unstable rather than supported.
+
 Build from source with `ghc` installed:
 
 ```bash
@@ -69,6 +73,18 @@ docker run --rm jonbaldie/avg avg "curl -o /dev/null https://example.com" 5
 
 ## Test Workflow
 
+For a local single-build verification pass, start clean and run:
+
+```bash
+make clean
+make build
+./build/avg "true" 2
+./test_cli.sh
+make clean
+```
+
+This keeps the manual smoke test and the CLI regression script on the same built binary while mirroring the repo's normal quality gates.
+
 Run the full non-interactive CLI regression suite with:
 
 ```bash
@@ -83,4 +99,4 @@ Today that target builds the binary and executes `./test_cli.sh`, which verifies
 - child command failures propagate as non-zero exits
 - successful commands print `Average elapsed time:`
 
-GitHub Actions runs the same `make build`, `make test`, and `make clean` quality gates defined in `.github/workflows/ci.yml`. `.circleci/config.yml` is kept as a temporary transition shim so CircleCI stops failing on checkout while the repository uses GitHub Actions as the real CI pipeline.
+GitHub Actions runs `make build`, `make test`, and `make clean` with `ghc 9.4.3`, as defined in `.github/workflows/ci.yml`.
