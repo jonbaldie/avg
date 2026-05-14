@@ -7,4 +7,4 @@ write-ghc-environment-files: always
 source-repository-package
   type:     git
   location: https://github.com/vrthra/mucheck.git
-  tag:      0.4.0.1
+  commit:   979d7bb40ff78c2447102946ac468d6f8f2efba8
