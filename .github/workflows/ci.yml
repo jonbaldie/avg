@@ -15,7 +15,21 @@ jobs:
       - name: Set up GHC
         uses: haskell-actions/setup@v2
         with:
-          ghc-version: '9.4.3'
+          ghc-version: '9.4.8'
+          cabal-version: 'latest'
+
+      - name: Cache cabal store
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cabal/store
+            ~/.cabal/packages
+          key: ${{ runner.os }}-cabal-9.4.8-${{ hashFiles('cabal.project', 'avg.cabal') }}
+          restore-keys: |
+            ${{ runner.os }}-cabal-9.4.8-
+
+      - name: Update cabal index
+        run: cabal update
 
       - name: Build quality gate
         run: make build
@@ -25,3 +39,13 @@ jobs:
 
       - name: Clean build artifacts
         run: make clean
+
+      - name: Build MuCheck and test library
+        run: cabal build exe:avg lib:avg-mutest MuCheck:exe:mucheck
+
+      - name: Install mucheck executable
+        run: cabal install exe:mucheck --overwrite-policy=always
+
+      - name: Run mutation tests
+        continue-on-error: true
+        run: mucheck mutest/Spec.hs

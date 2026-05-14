@@ -1,0 +1,23 @@
+cabal-version: 3.0
+name:          avg
+version:       0.1.0.0
+license:       MIT
+
+executable avg
+  main-is:          Main.hs
+  build-depends:
+    base    >= 4.14,
+    time    >= 1.4,
+    process >= 1.6
+  default-language: Haskell2010
+  ghc-options:      -O2
+
+-- This library exists so MuCheck appears in the project's build plan and
+-- therefore in the .ghc.environment file that hint reads at mucheck runtime.
+library avg-mutest
+  hs-source-dirs:   mutest
+  exposed-modules:  Spec
+  build-depends:
+    base   >= 4.14,
+    MuCheck
+  default-language: Haskell2010
