@@ -82,3 +82,9 @@ bd close <id>         # Complete work
 - NEVER say "ready to push when you are" - YOU must push
 - If push fails, resolve and retry until it succeeds
 <!-- END BEADS INTEGRATION -->
+
+## Cursor Cloud specific instructions
+
+GHC 9.4.8 and Cabal 3.16.1.0 are on the default `PATH` (`/usr/local/bin`, backed by `~/.ghcup`). That matches `.github/workflows/ci.yml`. The README and `Dockerfile` still name GHC 9.4.3.
+
+`mucheck` is installed for the mutation-test step, which CI marks `continue-on-error`. MuCheck is the git pin in `cabal.project`. This repo is a CLI; nothing needs to stay running.
