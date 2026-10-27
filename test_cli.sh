@@ -43,6 +43,7 @@ assert_fails_with "Usage: avg \"<command>\" <iterations>"
 assert_fails_with "Invalid iteration count: nope" "true" "nope"
 assert_fails_with "Iteration count must be a positive integer" "true" "0"
 assert_fails_with "Iteration count must be a positive integer" "true" "-2"
+assert_fails_with "Invalid iteration count: 18446744073709551617" "true" "18446744073709551617"
 assert_fails_with "Command failed with exit code 1" "false" "1"
 assert_succeeds_with "Average elapsed time:" "true" "2"
 
