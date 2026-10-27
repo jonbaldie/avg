@@ -1,0 +1,47 @@
+## Build and regression suite
+The Glorious Glasgow Haskell Compilation System, version 9.4.3
+rm -rf build && mkdir -p build && ghc -O2 Main.hs -o build/avg
+[1 of 2] Compiling Main             ( Main.hs, Main.o )
+[2 of 2] Linking build/avg
+chmod +x test_cli.sh && ./test_cli.sh
+test_cli.sh: all checks passed
+
+## Journey 1: shell commands and persisted effects
+Average elapsed time: 0.002836176333s
+file contents: xxx
+Average elapsed time: 0.00454821s
+file contents: b
+b
+
+## Journey 2: invalid invocation and correction
+Invalid iteration count: nope
+count=nope status=1
+Iteration count must be a positive integer
+count=0 status=1
+Iteration count must be a positive integer
+count=-2 status=1
+Average elapsed time: 0.00088604s
+count=2 status=0
+Usage: avg "<command>" <iterations>
+missing status=1
+
+## Journey 3: failed command stops further iterations
+Command failed with exit code 7
+replay=1 status=1
+file contents: x
+Command failed with exit code 7
+replay=2 status=1
+file contents: x
+Average elapsed time: 0.002399935s
+recovered status=0
+
+## Boundary variation: oversized positive iteration count
+Average elapsed time: 0.002296455s
+replay=1 status=0
+Average elapsed time: 0.0009394s
+replay=2 status=0
+rm -rf build && rm -f Main.hi Main.o
+Average elapsed time: 0.003188703s
+replay=1 status=0 count=1
+Average elapsed time: 0.001977552s
+replay=2 status=0 count=1
