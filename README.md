@@ -73,6 +73,8 @@ docker run --rm jonbaldie/avg avg "curl -o /dev/null https://example.com" 5
 
 ## Test Workflow
 
+The [CLI exploratory report](docs/exploratory-testing/2026-10-27-cli.md) records user journeys and a confirmed iteration-count bug.
+
 For a local single-build verification pass, start clean and run:
 
 ```bash
