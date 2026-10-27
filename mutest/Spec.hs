@@ -10,11 +10,12 @@ import Text.Read (readMaybe)
 parseArgs :: [String] -> Either String (String, Int)
 parseArgs [command, rawIterations] = do
   iterations <-
-    case readMaybe rawIterations of
+    case readMaybe rawIterations :: Maybe Integer of
       Nothing -> Left $ "Invalid iteration count: " ++ rawIterations
       Just n
         | n <= 0 -> Left "Iteration count must be a positive integer"
-        | otherwise -> Right n
+        | n > toInteger (maxBound :: Int) -> Left $ "Invalid iteration count: " ++ rawIterations
+        | otherwise -> Right (fromInteger n)
   Right (command, iterations)
 parseArgs _ = Left "Usage: avg \"<command>\" <iterations>"
 
