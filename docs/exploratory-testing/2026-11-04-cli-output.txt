@@ -1,0 +1,137 @@
+=== toolchain and build ===
+The Glorious Glasgow Haskell Compilation System, version 9.4.3
+rm -rf build && mkdir -p build && ghc -O2 Main.hs -o build/avg
+[1 of 2] Compiling Main             ( Main.hs, Main.o )
+[2 of 2] Linking build/avg
+chmod +x test_cli.sh && ./test_cli.sh
+test_cli.sh: all checks passed
+
+=== three writes ===
+command: /work/build/avg printf\ x\ \>\>\ count 3
+exit=0
+stdout:
+Average elapsed time: 0.001851763666s
+stderr:
+count=3
+
+=== pipeline and redirect ===
+command: /work/build/avg printf\ \'a\\nb\\n\'\ \|\ grep\ b\ \>\>\ selected 2
+exit=0
+stdout:
+Average elapsed time: 0.0059917085s
+stderr:
+selected=   b  \n   b  \n
+
+=== missing arguments ===
+command: /work/build/avg
+exit=1
+stdout:
+stderr:
+Usage: avg "<command>" <iterations>
+
+=== malformed count ===
+command: /work/build/avg printf\ x\ \>\>\ invalid nope
+exit=1
+stdout:
+stderr:
+Invalid iteration count: nope
+
+=== zero count ===
+command: /work/build/avg printf\ x\ \>\>\ invalid 0
+exit=1
+stdout:
+stderr:
+Iteration count must be a positive integer
+
+=== negative count ===
+command: /work/build/avg printf\ x\ \>\>\ invalid -2
+exit=1
+stdout:
+stderr:
+Iteration count must be a positive integer
+
+=== oversized count from issue 3 ===
+command: /work/build/avg printf\ x\ \>\>\ invalid 18446744073709551617
+exit=1
+stdout:
+stderr:
+Invalid iteration count: 18446744073709551617
+invalid count side effect absent
+
+=== corrected count ===
+command: /work/build/avg printf\ x\ \>\>\ corrected 2
+exit=0
+stdout:
+Average elapsed time: 0.0026456375s
+stderr:
+corrected=2
+
+=== child failure replay 1 ===
+command: /work/build/avg printf\ x\ \>\>\ failed\;\ exit\ 7 3
+exit=1
+stdout:
+stderr:
+Command failed with exit code 7
+failed=1
+
+=== child failure replay 2 ===
+command: /work/build/avg printf\ x\ \>\>\ failed\;\ exit\ 7 3
+exit=1
+stdout:
+stderr:
+Command failed with exit code 7
+failed=1
+
+=== retry after child failure ===
+command: /work/build/avg printf\ x\ \>\>\ retry 2
+exit=0
+stdout:
+Average elapsed time: 0.0021952385s
+stderr:
+retry=2
+
+=== failure on second iteration replay 1 ===
+command: /work/build/avg printf\ x\ \>\>\ later\;\ test\ \"\$\(wc\ -c\ \<\ later\)\"\ -lt\ 2 3
+exit=1
+stdout:
+stderr:
+Command failed with exit code 1
+later=2
+
+=== failure on second iteration replay 2 ===
+command: /work/build/avg printf\ x\ \>\>\ later\;\ test\ \"\$\(wc\ -c\ \<\ later\)\"\ -lt\ 2 3
+exit=1
+stdout:
+stderr:
+Command failed with exit code 1
+later=2
+
+=== command not found ===
+command: /work/build/avg avg_exploration_no_such_command 2
+exit=1
+stdout:
+stderr:
+/bin/sh: 1: avg_exploration_no_such_command: Permission denied
+Command failed with exit code 127
+
+=== empty command ===
+command: /work/build/avg '' 2
+exit=1
+stdout:
+stderr:
+avg: system: invalid argument (null command)
+
+=== shell exit 127 ===
+command: /work/build/avg exit\ 127 2
+exit=1
+stdout:
+stderr:
+Command failed with exit code 127
+
+=== shell signal termination ===
+command: /work/build/avg kill\ -TERM\ \$\$ 2
+exit=1
+stdout:
+stderr:
+Command failed with exit code -15
+rm -rf build && rm -f Main.hi Main.o
