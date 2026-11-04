@@ -73,7 +73,7 @@ docker run --rm jonbaldie/avg avg "curl -o /dev/null https://example.com" 5
 
 ## Test Workflow
 
-The [CLI exploratory report](docs/exploratory-testing/2026-10-27-cli.md) records user journeys and a confirmed iteration-count bug.
+The [2026-10-27 CLI exploratory report](docs/exploratory-testing/2026-10-27-cli.md) records user journeys and an iteration-count bug. The [2026-11-04 CLI exploratory report](docs/exploratory-testing/2026-11-04-cli.md) records a later pass and verifies that the oversized count is rejected.
 
 For a local single-build verification pass, start clean and run:
 
